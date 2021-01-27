@@ -1,5 +1,5 @@
 # JewelryShop
-## Web Application for memorize vocabulary
+## Web Application for Shop
 This web application is created with Django framework
 
 ```

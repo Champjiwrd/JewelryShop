@@ -12,7 +12,6 @@ def HomePage(request):
 		j.jewelry_price = "{:,.2f}".format(j.jewelry_price)
 	context = {
 		'jewelry' : jewelry,
-		'amountJewelry' : len(jewelry),
 		'listJewelry' : listJewelry
 	}
 	return render(request,'shop/home.html',context)

@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '78z1jsi&t#k8ka@y^(qi+n+0bm9bhvpsw0zfmwma+1lv#1$u83'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://jewelryshop-champ.herokuapp.com/']
 
 
 # Application definition

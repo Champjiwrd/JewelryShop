@@ -1,7 +1,43 @@
 {% extends 'shop/base.html' %}
 {% block css %}
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<style>
+    .input-number {
+        width: 30%;
+        padding: 0 12px;
+        vertical-align: top;
+        text-align: center;
+        outline: none;
+    }
+
+    .input-number,
+    .input-number-decrement,
+    .input-number-increment {
+        border: 1px solid #ccc;
+        height: 40px;
+        user-select: none;
+    }
+
+    .input-number-decrement,
+    .input-number-increment {
+        display: inline-block;
+        width: 40px;
+        line-height: 38px;
+        background: #f1f1f1;
+        color: #444;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .input-number-decrement:active,
+    .input-number-increment:active {
+        background: #ddd;
+    }
+</style>
 
 {% endblock %}
 
@@ -16,13 +52,76 @@
         <div class="col">
             <h2>{{jewelry.jewelry_name}}</h2>
             <hr>
-            <h3> &#3647;{{jewelry.jewelry_price}}</h3><hr>
+            <h3> &#3647;{{jewelry.jewelry_price}}</h3>
+            <hr>
             <p> {{jewelry.jewelry_about}}</p>
+            Quantity:&nbsp;&nbsp;
+            <span class="input-number-decrement">–</span>
+            <input id="numadd" class="input-number" type="text" value="1" min="0" max="10">
+            <span class="input-number-increment">+</span><br><br>
             <div class="d-grid gap-2">
-                <button class="btn btn-lg" style="background-color: #a6192e; color: aliceblue;"  type="button">Add to cart</button>
+                <button class="btn btn-lg" onclick="addtocart()" style="background-color: #a6192e; color: aliceblue;"
+                    type="button">Add to
+                    cart</button>
                 <a href="/" class="btn btn-outline-secondary btn-lg">Back to home</a>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function addtocart() {
+        var num = parseInt(document.getElementById("lblCartCount").innerHTML);
+        var numadd = parseInt(document.getElementById("numadd").value);
+        if (num < 10 && numadd + num <= 10) {
+            num = num + numadd;
+        }
+        else if (numadd + num >=10){
+            num=10;
+        }
+
+        document.getElementById("lblCartCount").innerHTML = num;
+    }
+
+    (function () {
+
+        window.inputNumber = function (el) {
+
+            var min = el.attr('min') || false;
+            var max = el.attr('max') || false;
+
+            var els = {};
+
+            els.dec = el.prev();
+            els.inc = el.next();
+
+            el.each(function () {
+                init($(this));
+            });
+
+            function init(el) {
+
+                els.dec.on('click', decrement);
+                els.inc.on('click', increment);
+
+                function decrement() {
+                    var value = el[0].value;
+                    value--;
+                    if (!min || value >= min) {
+                        el[0].value = value;
+                    }
+                }
+
+                function increment() {
+                    var value = el[0].value;
+                    value++;
+                    if (!max || value <= max) {
+                        el[0].value = value++;
+                    }
+                }
+            }
+        }
+    })();
+
+    inputNumber($('.input-number'));
+</script>
 {% endblock content %}
